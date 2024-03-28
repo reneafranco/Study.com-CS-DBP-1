@@ -490,3 +490,138 @@ VALUES
 (299, 26, 23, '2016-03-01'),
 (300, 49, 23, '2016-10-25');
 
+
+
+-- 1 -- Display all contents of the Clients table: 
+SELECT * FROM Client;
+
+-- 2 -- First names and last names of clients that borrowed books in March 2018:
+
+SELECT DISTINCT ClientFirstName, ClientLastName
+FROM Borrower
+JOIN Client ON Borrower.ClientID = Client.ClientID
+WHERE BorrowDate BETWEEN '2018-03-01' AND '2018-03-31';
+
+-- 3--  First names and last names of clients that borrowed books in March 2018:
+
+SELECT DISTINCT c.ClientFirstName, c.ClientLastName
+FROM Borrower b
+JOIN Client c ON b.ClientID = c.ClientID
+WHERE b.BorrowDate BETWEEN '2018-03-01' AND '2018-03-31';
+
+-- 4 --First and last names of the top 5 authors clients borrowed in 2017:
+
+SELECT AuthorFirstName, AuthorLastName
+FROM (SELECT BookAuthor, COUNT(*) AS BorrowCount
+      FROM Borrower
+      JOIN Book ON Borrower.BookID = Book.BookID
+      WHERE BorrowDate BETWEEN '2017-01-01' AND '2017-12-31'
+      GROUP BY BookAuthor
+      ORDER BY BorrowCount DESC
+      LIMIT 5) AS TopAuthors
+JOIN Author ON TopAuthors.BookAuthor = Author.AuthorID;
+
+-- 5-- Nationalities of the least 5 authors that clients borrowed during the years 2015-2017:
+
+SELECT AuthorNationality
+FROM (SELECT BookAuthor, COUNT(*) AS BorrowCount
+      FROM Borrower
+      JOIN Book ON Borrower.BookID = Book.BookID
+      WHERE BorrowDate BETWEEN '2015-01-01' AND '2017-12-31'
+      GROUP BY BookAuthor
+      ORDER BY BorrowCount ASC
+      LIMIT 5) AS LeastBorrowedAuthors
+JOIN Author ON LeastBorrowedAuthors.BookAuthor = Author.AuthorID;
+
+-- 6 -- The book that was most borrowed during the years 2015-2017:
+
+SELECT BookTitle
+FROM (SELECT BookID, COUNT(*) AS BorrowCount
+      FROM Borrower
+      WHERE BorrowDate BETWEEN '2015-01-01' AND '2017-12-31'
+      GROUP BY BookID
+      ORDER BY BorrowCount DESC
+      LIMIT 1) AS MostBorrowedBook
+JOIN Book ON MostBorrowedBook.BookID = Book.BookID;
+
+-- 7 -- Top borrowed genres for client born in years 1970-1980:
+
+SELECT Genre, COUNT(*) AS BorrowCount
+FROM Borrower
+JOIN Book ON Borrower.BookID = Book.BookID
+JOIN Client ON Borrower.ClientID = Client.ClientID
+WHERE ClientDoB BETWEEN '1970-01-01' AND '1980-12-31'
+GROUP BY Genre
+ORDER BY BorrowCount DESC;
+
+-- 8 -- Top 5 occupations that borrowed the most in 2016:
+
+SELECT Occupation, COUNT(*) AS BorrowCount
+FROM Borrower
+JOIN Client ON Borrower.ClientID = Client.ClientID
+WHERE BorrowDate BETWEEN '2016-01-01' AND '2016-12-31'
+GROUP BY Occupation
+ORDER BY BorrowCount DESC
+LIMIT 5;
+
+-- 9 -- Average number of borrowed books by job title:
+
+SELECT Occupation, AVG(NumBooksBorrowed) AS AvgBooksBorrowed
+FROM (SELECT Occupation, COUNT(*) AS NumBooksBorrowed
+      FROM Borrower
+      JOIN Client ON Borrower.ClientID = Client.ClientID
+      GROUP BY Occupation) AS BorrowStats
+GROUP BY Occupation;
+
+-- 10 -- Create a VIEW and display the titles that were borrowed by at least 20% of clients:
+
+CREATE VIEW PopularBooks AS
+SELECT BookID, COUNT(DISTINCT ClientID) AS NumClientsBorrowed
+FROM Borrower
+GROUP BY BookID;
+
+SELECT BookTitle
+FROM PopularBooks
+JOIN Book ON PopularBooks.BookID = Book.BookID
+WHERE NumClientsBorrowed >= (SELECT COUNT(DISTINCT ClientID) * 0.20 FROM Client);
+
+-- 11 --  The top month of borrows in 2017:
+
+SELECT EXTRACT(MONTH FROM BorrowDate) AS BorrowMonth, COUNT(*) AS BorrowCount
+FROM Borrower
+WHERE EXTRACT(YEAR FROM BorrowDate) = 2017
+GROUP BY BorrowMonth
+ORDER BY BorrowCount DESC
+LIMIT 1;
+
+-- 12 --  Average number of borrows by age:
+
+SELECT AVG(BorrowCount) AS AvgBorrowsByAge
+FROM (SELECT ClientDoB, COUNT(*) AS BorrowCount
+      FROM Borrower
+      JOIN Client ON Borrower.ClientID = Client.ClientID
+      GROUP BY ClientDoB) AS BorrowStats;
+
+-- 13 --  The oldest and the youngest clients of the library:
+
+SELECT ClientFirstName, ClientLastName, ClientDoB
+FROM Client
+ORDER BY ClientDoB ASC
+LIMIT 1;
+
+SELECT ClientFirstName, ClientLastName, ClientDoB
+FROM Client
+ORDER BY ClientDoB DESC
+LIMIT 1;
+
+-- 14 -- First and last names of authors that wrote books in more than one genre:
+
+SELECT AuthorFirstName, AuthorLastName
+FROM Author
+JOIN (
+    SELECT BookAuthor
+    FROM Book
+    GROUP BY BookAuthor
+    HAVING COUNT(DISTINCT Genre) > 1
+) AS MultiGenreAuthors ON Author.AuthorID = MultiGenreAuthors.BookAuthor;
+
