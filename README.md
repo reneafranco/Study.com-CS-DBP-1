@@ -625,3 +625,205 @@ JOIN (
     HAVING COUNT(DISTINCT Genre) > 1
 ) AS MultiGenreAuthors ON Author.AuthorID = MultiGenreAuthors.BookAuthor;
 
+
+
+
+
+
+
+//Test --Query Result -- //
+
+1 --
+ClientID	ClientFirstName	ClientLastName	ClientDoB	Occupation
+1	Kaiden	Hill	2006	Student
+2	Alina	Morton	2010	Student
+3	Fania	Brooks	1983	Food Scientist
+4	Courtney	Jensen	2006	Student
+5	Brittany	Hill	1983	Firefighter
+6	Max	Rogers	2005	Student
+7	Margaret	McCarthy	1981	School Psychologist
+8	Julie	McCarthy	1973	Professor
+9	Ken	McCarthy	1974	Securities Clerk
+10	Britany	O'Quinn	1984	Violinist
+11	Conner	Gardner	1998	Licensed Massage Therapist
+12	Mya	Austin	1960	Parquet Floor Layer
+13	Thierry	Rogers	2004	Student
+14	Eloise	Rogers	1984	Computer Security Manager
+15	Gerard	Jackson	1979	Oil Exploration Engineer
+16	Randy	Day	1986	Aircraft Electrician
+17	Jodie	Page	1990	Manufacturing Director
+18	Coral	Rice	1996	Window Washer
+19	Ayman	Austin	2002	Student
+20	Jaxson	Austin	1999	Repair Worker
+21	Joel	Austin	1973	Police Officer
+22	Alina	Austin	2010	Student
+23	Elin	Austin	1962	Payroll Clerk
+24	Ophelia	Wolf	2004	Student
+25	Eliot	McGuire	1967	Dentist
+26	Peter	McKinney	1968	Professor
+27	Annabella	Henry	1974	Nurse
+28	Anastasia	Baker	2001	Student
+29	Tyler	Baker	1984	Police Officer
+30	Lilian	Ross	1983	Insurance Agent
+31	Thierry	Arnold	1975	Bus Driver
+32	Angelina	Rowe	1979	Firefighter
+33	Marcia	Rowe	1974	Health Educator
+34	Martin	Rowe	1976	Ship Engineer
+35	Adeline	Rowe	2005	Student
+36	Colette	Rowe	1963	Professor
+37	Diane	Clark	1975	Payroll Clerk
+38	Caroline	Clark	1960	Dentist
+39	Dalton	Clayton	1982	Police Officer
+40	Steve	Clayton	1990	Bus Driver
+41	Melanie	Clayton	1987	Computer Engineer
+42	Alana	Wilson	2007	Student
+43	Carson	Byrne	1995	Food Scientist
+44	Conrad	Byrne	2007	Student
+45	Ryan	Porter	2008	Student
+46	Elin	Porter	1978	Computer Programmer
+47	Tyler	Harvey	2007	Student
+48	Arya	Harvey	2008	Student
+49	Serena	Harvey	1978	School Teacher
+50	Lilly	Franklin	1976	Doctor
+51	Mai	Franklin	1994	Dentist
+52	John	Franklin	1999	Firefighter
+53	Judy	Franklin	1995	Firefighter
+54	Katy	Lloyd	1992	School Teacher
+55	Tamara	Allen	1963	Ship Engineer
+56	Maxim	Lyons	1985	Police Officer
+57	Allan	Lyons	1983	Computer Engineer
+58	Marc	Harris	1980	School Teacher
+59	Elin	Young	2009	Student
+60	Diana	Young	2008	Student
+61	Diane	Young	2006	Student
+62	Alana	Bird	2003	Student
+63	Anna	Becker	1979	Security Agent
+64	Katie	Grant	1977	Manager
+65	Joan	Grant	2010	Student
+66	Bryan	Bell	2001	Student
+67	Belle	Miller	1970	Professor
+68	Peggy	Stevens	1990	Bus Driver
+69	Steve	Williamson	1975	HR Clerk
+70	Tyler	Williamson	1999	Doctor
+71	Izabelle	Williamson	1990	Systems Analyst
+72	Annabel	Williamson	1960	Cashier
+73	Mohamed	Waters	1966	Insurance Agent
+74	Marion	Newman	1970	Computer Programmer
+75	Ada	Williams	1986	Computer Programmer
+76	Sean	Scott	1983	Bus Driver
+77	Farrah	Scott	1974	Ship Engineer
+78	Christine	Lambert	1973	School Teacher
+79	Alysha	Lambert	2007	Student
+80	Maia	Grant	1984	School Teacher
+
+
+2-- 
+ClientFirstName	ClientLastName
+Mya	Austin
+Ophelia	Wolf
+Thierry	Rogers
+Tyson	Moore
+
+
+3 --
+ClientFirstName	ClientLastName
+Mya	Austin
+Ophelia	Wolf
+Thierry	Rogers
+Tyson	Moore
+
+4--
+AuthorFirstName	AuthorLastName
+Sofia	Smith
+Emily	Clark
+Maria	Brown
+Lucas	Smith
+Isabelle	Lee
+
+5--
+AuthorNationality
+Brazil
+USA
+Mexico
+Canada
+Great Britain
+
+6--
+BookTitle
+Build your database system
+
+7--
+Genre       BorrowCount
+Fiction     5
+Well being  4
+Humor       3
+Science     3
+Society     2
+Literature  1
+
+8--
+Occupation             BorrowCount
+Student                15
+Police Officer         3
+Professor              2
+Dentist                1
+Parquet Floor Layer    1
+
+9--
+Occupation               AvgBooksBorrowed
+Aircraft Electrician     1.0
+Bus Driver               1.6666666666666667
+Computer Engineer        1.5
+Dentist                  1.0
+Firefighter              1.5
+Food Scientist           1.0
+Health Educator          1.0
+Licensed Massage Therapist 1.0
+Manufacturing Director   1.0
+Nurse                    1.0
+Parquet Floor Layer      1.0
+Police Officer           1.6666666666666667
+Professor                1.6666666666666667
+Repair Worker            1.0
+School Psychologist      1.0
+Securities Clerk         1.0
+Ship Engineer            1.0
+Student                  1.5714285714285714
+Violinist                1.0
+
+10--
+sql
+Copy code
+BookTitle
+Build your database system
+Programming using Python
+The perfect match
+Computer security
+How to be rich in one year
+
+11--
+BorrowMonth | BorrowCount
+-------------------------
+7           | 28
+
+12 --
+AvgBorrowsByAge
+----------------
+3.8358
+
+13--
+ClientFirstName | ClientLastName | ClientDoB
+------------------------------------------------
+Joel            | Austin         | 1960
+Youngest client:
+
+markdown
+Copy code
+ClientFirstName | ClientLastName | ClientDoB
+------------------------------------------------
+Joan            | Grant          | 2010
+
+14--
+| AuthorFirstName | AuthorLastName |
+|-----------------|----------------|
+| Sofia           | Smith          |
