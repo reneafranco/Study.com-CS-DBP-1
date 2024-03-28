@@ -3,7 +3,7 @@
 1 - Create the database tables based on the provided Entity Relationship Diagram (ERD).
 
 -- Create Authors table
-CREATE TABLE Authors (
+CREATE TABLE Author (
     AuthorID INT PRIMARY KEY,
     AuthorFirstName VARCHAR(50),
     AuthorLastName VARCHAR(50),
@@ -11,12 +11,12 @@ CREATE TABLE Authors (
 );
 
 -- Create Books table
-CREATE TABLE Books (
+CREATE TABLE Book (
     BookID INT PRIMARY KEY,
     BookTitle VARCHAR(100),
     BookAuthor INT,
     Genre VARCHAR(50),
-    FOREIGN KEY (BookAuthor) REFERENCES Authors(AuthorID)
+    FOREIGN KEY (BookAuthor) REFERENCES Author(AuthorID)
 );
 
 -- Create Clients table
@@ -34,8 +34,8 @@ CREATE TABLE Borrowers (
     ClientID INT,
     BookID INT,
     BorrowDate DATE,
-    FOREIGN KEY (ClientID) REFERENCES Clients(ClientID),
-    FOREIGN KEY (BookID) REFERENCES Books(BookID)
+    FOREIGN KEY (ClientID) REFERENCES Client(ClientID),
+    FOREIGN KEY (BookID) REFERENCES Book(BookID)
 );
 
 
